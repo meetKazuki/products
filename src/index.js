@@ -2,6 +2,8 @@ import Debug from 'debug';
 import dotenv from 'dotenv';
 import express from 'express';
 import logger from 'morgan';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDoc from '../docs/products-api.json';
 
 dotenv.config();
 const app = express();
@@ -17,10 +19,12 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+
 app.get('/', (req, res) => {
   res.status(200).json({
     status: 'success',
-    message: 'Welcome to Products API...'
+    message: 'Welcome to Products...'
   });
 });
 
