@@ -1,5 +1,8 @@
 # Products API
 
+[![Build Status](https://travis-ci.org/meetKazuki/products.svg?branch=develop)](https://travis-ci.org/meetKazuki/products)
+[![Coverage Status](https://coveralls.io/repos/github/meetKazuki/products/badge.svg?branch=develop)](https://coveralls.io/github/meetKazuki/products?branch=develop)
+
 ## Overview
 
 
@@ -7,7 +10,7 @@
 
 - [Hosted API](https://productsapi-staging.herokuapp.com/)
 - [API Docs](https://productsapi-staging.herokuapp.com/docs)
-- [Postman Collections](https://www.getpostman.com/collections/436773e9e1be1d83c314)
+- [Postman Collections](https://www.getpostman.com/collections/f79fa50ac8890d7da743)
 
 
 ## Technologies Used
