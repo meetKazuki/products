@@ -62,4 +62,5 @@ typings/
 
 # misc
 build/
+docs/EntitySpecification
 package-lock.json
