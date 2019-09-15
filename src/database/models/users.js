@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 import DB from '../index';
 
 config();
-const salt = process.env.SALT;
+const salt = +process.env.SALT;
 
 /**
  * @class User
@@ -15,7 +15,8 @@ export default class User {
   constructor({
     firstName, email, password, mobileNumber
   }) {
-    this.id = User.incrementCount();
+    User.incrementCount();
+    this.id = User.count;
     this.firstName = firstName;
     this.email = email;
     this.password = bcrypt.hashSync(password, salt);
@@ -45,7 +46,7 @@ export default class User {
 
   /**
    * @description - this method returns all objects
-   * @returns {object} user array
+   * @returns {object} user
    * @memberof User
    */
   static findAll() {
@@ -54,7 +55,7 @@ export default class User {
 
   /**
    * @param {string} email
-   * @returns {object} user array
+   * @returns {object} user
    * @memberof User
    */
   static findOne(email) {
@@ -63,7 +64,7 @@ export default class User {
 
   /**
    * @description resets user DB
-   * @returns {array} user array
+   * @returns {array} empty user array
    * @memberof User
    */
   static resetTable() {

@@ -48,6 +48,10 @@ Test specs are implemented using [mocha](https://mochajs.org) & [chai](https://c
 - You can also run an automated test by running `npm test`. `npm test` performs a single full test suite run, including code coverage reporting.
 
 
+## Inspiration/Resources
+▶️ [Restful API with NodeJS, Express, PostgreSQL, Sequelize, Travis, Mocha, Coveralls and Code Climate.](https://medium.com/@victorsteven/restful-api-with-nodejs-express-postgresql-sequelize-travis-mocha-coveralls-and-code-climate-f28715f7a014) by [Steven Victor](https://github.com/victorsteven/Book-app-NodeJS-PostgreSQL-Travis-Coveralls-Code-Climate)
+
+
 ## License
 
 The ProductsAPI project is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
