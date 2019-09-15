@@ -1,5 +1,5 @@
-import bcrypt from 'bcryptjs';
 import { config } from 'dotenv';
+import { hashPassword } from '../../helpers/auth';
 import DB from '../index';
 
 config();
@@ -19,7 +19,7 @@ export default class User {
     this.id = User.count;
     this.firstName = firstName;
     this.email = email;
-    this.password = bcrypt.hashSync(password, salt);
+    this.password = hashPassword(password, salt);
     this.mobileNumber = mobileNumber;
     this.role = 'attendant';
   }
