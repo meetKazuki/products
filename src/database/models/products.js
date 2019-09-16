@@ -15,7 +15,7 @@ export default class Product {
     this.name = name;
     this.category = category;
     this.price = price;
-    this.quantity = quantity;
+    this.quantity = quantity || 0;
     this.description = description || 'This is a test product';
     this.imageUrl = 'image.png';
   }
