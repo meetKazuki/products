@@ -46,7 +46,7 @@ export default class User {
 
   /**
    * @description - this method returns all objects
-   * @returns {object} user
+   * @returns {object} users
    * @memberof User
    */
   static findAll() {
