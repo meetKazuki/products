@@ -2,28 +2,27 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import { generateToken } from '../../src/helpers/auth';
 import app from '../../src';
-import { adminLogin, attendantLogin } from '../mocks/auth.mock';
+import { attendantLogin, invalidToken } from '../mocks/auth.mock';
 
-const baseURI = '/api/v1';
+const baseURI = '/api/v1/products';
 const { expect } = chai;
-let attendantToken;
-let adminToken;
+let validToken;
 
 chai.use(chaiHttp);
 
-describe('Admin Routes', () => {
-  context('Retrieve all users in the system', () => {
-    adminToken = generateToken(adminLogin);
-    it('should retrieve all users in the system', (done) => {
+describe('Product Routes', () => {
+  context('Retrieve all products in the system', () => {
+    it('should retrieve all products in the system', (done) => {
+      validToken = generateToken(attendantLogin);
       chai
         .request(app)
-        .get(`${baseURI}/users`)
-        .set('Authorization', adminToken)
+        .get(baseURI)
+        .set('Authorization', validToken)
         .end((err, res) => {
           const { status, message, data } = res.body;
           expect(res).to.have.status(200);
           expect(status).to.eql('success');
-          expect(message).to.eql('Users retrieved!');
+          expect(message).to.eql('Products retrieved!');
           expect(data).to.be.an('array');
           done(err);
         });
@@ -32,7 +31,7 @@ describe('Admin Routes', () => {
     specify('error if token is not provided', (done) => {
       chai
         .request(app)
-        .get(`${baseURI}/users`)
+        .get(baseURI)
         .set('Authorization', '')
         .end((err, res) => {
           const { status, message } = res.body;
@@ -43,17 +42,16 @@ describe('Admin Routes', () => {
         });
     });
 
-    specify('error when an authorized user tries to access resource', (done) => {
-      attendantToken = generateToken(attendantLogin);
+    specify('error if an invalid token is provided', (done) => {
       chai
         .request(app)
-        .get(`${baseURI}/users`)
-        .set('Authorization', attendantToken)
+        .get(baseURI)
+        .set('Authorization', invalidToken)
         .end((err, res) => {
           const { status, message } = res.body;
-          expect(res).to.have.status(403);
+          expect(res).to.have.status(401);
           expect(status).to.eql('error');
-          expect(message).to.eql('Access denied!');
+          expect(message).to.eql('Unauthorized. Token is invalid or expired');
           done(err);
         });
     });
