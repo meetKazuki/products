@@ -3,6 +3,7 @@ import chaiHttp from 'chai-http';
 import app from '../../src';
 import { adminLogin, attendantLogin, invalidToken } from '../mocks/auth.mock';
 import { generateToken } from '../../src/helpers/auth';
+import { newSales } from '../mocks/sale.mock';
 
 const baseURI = '/api/v1/sales';
 const { expect } = chai;
@@ -12,6 +13,43 @@ let validToken;
 chai.use(chaiHttp);
 
 describe('Sales Routes', () => {
+  context('Create a new product', () => {
+    it('should create a new sales record', (done) => {
+      validToken = generateToken(attendantLogin);
+      chai
+        .request(app)
+        .post(`${baseURI}/new`)
+        .send(newSales)
+        .set('Authorization', validToken)
+        .end((err, res) => {
+          const { status, message, data } = res.body;
+          expect(res).to.have.status(201);
+          expect(status).to.eql('success');
+          expect(message).to.eql('Sales added!');
+          expect(data).to.be.an('object');
+          expect(data).to.have.property('id');
+          expect(data).to.have.property('productId');
+          expect(data).to.have.property('staffId');
+          done(err);
+        });
+    });
+
+    specify('error if an unauthorized user tries to access resource', (done) => {
+      adminToken = generateToken(adminLogin);
+      chai
+        .request(app)
+        .post(`${baseURI}/new`)
+        .set('Authorization', adminToken)
+        .end((err, res) => {
+          const { status, message } = res.body;
+          expect(res).to.have.status(403);
+          expect(status).to.eql('error');
+          expect(message).to.eql('Access denied!');
+          done(err);
+        });
+    });
+  });
+
   context('Retrieve all sales records', () => {
     it('should retrieve all the sales records', (done) => {
       adminToken = generateToken(adminLogin);

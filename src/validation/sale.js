@@ -1,7 +1,13 @@
 import { check } from 'express-validator';
 
 export default {
-  getSaleSchema: [
+  createSalesSchema: [
+    check('productId')
+      .exists()
+      .withMessage('Product ID must be provided')
+  ],
+  
+  getSalesSchema: [
     check('saleId')
       .exists()
       .withMessage('Sale ID is required')

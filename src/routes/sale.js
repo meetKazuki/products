@@ -6,9 +6,17 @@ import schemas from '../validation/sale';
 import validator from '../middleware/validator';
 
 const { verifyToken } = authentication;
-const { getSaleSchema } = schemas;
+const { createSalesSchema, getSalesSchema } = schemas;
 
 const sale = Router();
+
+sale.post(
+  '/new',
+  verifyToken,
+  permit('attendant'),
+  validator(createSalesSchema),
+  SaleController.createSale
+);
 
 sale.get(
   '/',
@@ -21,7 +29,7 @@ sale.get(
   '/:saleId',
   verifyToken,
   permit('admin'),
-  validator(getSaleSchema),
+  validator(getSalesSchema),
   SaleController.getSingleSale
 );
 
