@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "title" : "Products API",
-    "description" : "This is a simple API for managing your goods",
+    "description" : "This is a simple API sales inventory and management",
     "contact" : {
       "email" : "meetdesmond.edem@gmail.com"
     },
@@ -13,80 +13,92 @@
     "version" : "1.0.0"
   },
   "servers" : [ {
-    "url" : "/"
+    "url" : "https://virtserver.swaggerhub.com/Team-Banshee/ProductsAPI/1.0.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  }, {
+    "url" : "http://localhost:5000/api/v1",
+    "description" : "localhost API Mocking"
+  }, {
+    "url" : "https://productsapi-staging.herokuapp.com/api/v1",
+    "description" : "Heroku API Mocking"
   } ],
   "tags" : [ {
+    "name" : "authentication",
+    "description" : "Operations for signup and signin"
+  }, {
     "name" : "admins",
     "description" : "Secured Admin-only calls"
   }, {
-    "name" : "developers",
-    "description" : "Operations available to regular developers"
+    "name" : "store attendants",
+    "description" : "Operations available to store attendants"
   } ],
   "paths" : {
-    "/inventory" : {
-      "get" : {
-        "tags" : [ "developers" ],
-        "summary" : "searches inventory",
-        "description" : "By passing in the appropriate options, you can search for\navailable inventory in the system\n",
-        "operationId" : "searchInventory",
-        "parameters" : [ {
-          "name" : "searchString",
-          "in" : "query",
-          "description" : "pass an optional search string for looking up inventory",
-          "required" : false,
-          "style" : "form",
-          "explode" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "skip",
-          "in" : "query",
-          "description" : "number of records to skip for pagination",
-          "required" : false,
-          "style" : "form",
-          "explode" : true,
-          "schema" : {
-            "minimum" : 0,
-            "type" : "integer",
-            "format" : "int32"
-          }
-        }, {
-          "name" : "limit",
-          "in" : "query",
-          "description" : "maximum number of records to return",
-          "required" : false,
-          "style" : "form",
-          "explode" : true,
-          "schema" : {
-            "maximum" : 50,
-            "minimum" : 0,
-            "type" : "integer",
-            "format" : "int32"
-          }
-        } ],
+    "/auth/signup" : {
+      "post" : {
+        "tags" : [ "authentication" ],
+        "summary" : "User sign up",
+        "description" : "User on successful signup is issued a token",
         "responses" : {
-          "200" : {
-            "description" : "search results matching criteria",
+          "201" : {
+            "description" : "User created",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/InventoryItem"
-                  }
+                  "$ref" : "#/components/schemas/Sample title"
                 }
               }
             }
           },
           "400" : {
-            "description" : "bad input parameter"
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Sample title_1"
+                }
+              }
+            }
+          },
+          "409" : {
+            "description" : "Conflict",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Sample title_2"
+                }
+              }
+            }
           }
         }
-      },
+      }
+    },
+    "/products" : {
+      "get" : {
+        "tags" : [ "store attendants" ],
+        "summary" : "retrieves all products in the system",
+        "description" : "You use this to get all the products in the system\n",
+        "operationId" : "retrieveProducts",
+        "responses" : {
+          "200" : {
+            "description" : "products list",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ProductItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/new" : {
       "post" : {
-        "tags" : [ "admins" ],
-        "summary" : "adds an inventory item",
+        "tags" : [ "store attendants" ],
+        "summary" : "adds a product item",
         "description" : "Adds an item to the system",
         "operationId" : "addInventory",
         "requestBody" : {
@@ -94,7 +106,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/InventoryItem"
+                "$ref" : "#/components/schemas/ProductItem"
               }
             }
           }
@@ -104,10 +116,7 @@
             "description" : "item created"
           },
           "400" : {
-            "description" : "invalid input, object invalid"
-          },
-          "409" : {
-            "description" : "an existing item already exists"
+            "description" : "Validation error"
           }
         }
       }
@@ -115,45 +124,107 @@
   },
   "components" : {
     "schemas" : {
-      "InventoryItem" : {
-        "required" : [ "id", "manufacturer", "name", "releaseDate" ],
+      "ProductItem" : {
+        "required" : [ "category", "description", "id", "imageUrl", "name", "price", "quantity" ],
         "type" : "object",
         "properties" : {
           "id" : {
-            "type" : "string",
-            "format" : "uuid",
-            "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+            "type" : "integer",
+            "format" : "integer",
+            "example" : 1
           },
           "name" : {
             "type" : "string",
-            "example" : "Widget Adapter"
+            "example" : "Appetizer - Mushroom Tart"
           },
-          "releaseDate" : {
+          "category" : {
             "type" : "string",
-            "format" : "date-time",
-            "example" : "2016-08-29T09:12:33.001Z"
+            "example" : "fashion"
           },
-          "manufacturer" : {
-            "$ref" : "#/components/schemas/Manufacturer"
+          "price" : {
+            "type" : "number",
+            "example" : 59.99
+          },
+          "quantity" : {
+            "type" : "integer",
+            "example" : 24
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "ipso lorem faucibus accumsan"
+          },
+          "imageUrl" : {
+            "type" : "string",
+            "example" : "http://dummyimage.com/241x188.bmp/5fa2dd/ffffff"
           }
         }
       },
-      "Manufacturer" : {
-        "required" : [ "name" ],
+      "UserItem" : {
+        "required" : [ "email", "firstName", "mobileNumber", "password" ],
         "type" : "object",
         "properties" : {
-          "name" : {
+          "firstName" : {
             "type" : "string",
-            "example" : "ACME Corporation"
+            "example" : "Desmond"
           },
-          "homePage" : {
+          "email" : {
             "type" : "string",
-            "format" : "url",
-            "example" : "https://www.acme-corp.com"
+            "example" : "edem.kazu@ovi.com"
           },
-          "phone" : {
+          "password" : {
             "type" : "string",
-            "example" : "408-867-5309"
+            "example" : "strongpassword"
+          },
+          "mobileNumber" : {
+            "type" : "integer",
+            "example" : 80999999999
+          }
+        }
+      },
+      "Sample title" : {
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string",
+            "example" : "success"
+          },
+          "message" : {
+            "type" : "string",
+            "example" : "Signup successful!"
+          },
+          "data" : {
+            "type" : "object",
+            "example" : {
+              "items" : {
+                "$ref" : "#/components/schemas/UserItem"
+              }
+            }
+          }
+        }
+      },
+      "Sample title_1" : {
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string",
+            "example" : "error"
+          },
+          "message" : {
+            "type" : "string",
+            "example" : "validation error!"
+          }
+        }
+      },
+      "Sample title_2" : {
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string",
+            "example" : "error"
+          },
+          "message" : {
+            "type" : "string",
+            "example" : "User already exist"
           }
         }
       }
