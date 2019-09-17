@@ -8,6 +8,22 @@ const response = new Response();
  */
 export default class SaleController {
   /**
+   * Create a new product
+   * Route: POST: /sales/new
+   * @param {object} req object
+   * @param {object} res object
+   * @returns {object} product
+   * @memberof SaleController
+   */
+  static createSale(req, res) {
+    const { id: staffId } = req.user;
+    const newSale = { staffId, ...req.body }
+    const record = Sale.create(newSale);
+    response.setSuccess(201, 'Sales added!', record);
+    return response.send(res);
+  }
+  
+  /**
    * Retrieve all sales
    * Route: GET: /sales
    * @param {object} req object
