@@ -113,7 +113,58 @@ const DB = {
       imageUrl: 'http://dummyimage.com/107x170.bmp/cc0000/ffffff'
     }
   ],
-  sales: [],
+  sales: [
+    {
+      id: 1,
+      productId: 9,
+      staffId: 1
+    },
+    {
+      id: 2,
+      productId: 9,
+      staffId: 1
+    },
+    {
+      id: 3,
+      productId: 9,
+      staffId: 1
+    },
+    {
+      id: 4,
+      productId: 9,
+      staffId: 2
+    },
+    {
+      id: 5,
+      productId: 5,
+      staffId: 1
+    },
+    {
+      id: 6,
+      productId: 10,
+      staffId: 1
+    },
+    {
+      id: 7,
+      productId: 7,
+      staffId: 2
+    },
+    {
+      id: 8,
+      productId: 4,
+      staffId: 2
+    },
+    {
+      id: 9,
+      productId: 5,
+      staffId: 2
+    },
+    {
+      id: 10,
+      productId: 2,
+      staffId: 1
+    }
+  ],
 };
 
 export default DB;
