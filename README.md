@@ -20,7 +20,8 @@
 ## Project Pipeline
 
 - [Hosted API](https://productsapi-staging.herokuapp.com/)
-- [API Docs](https://productsapi-staging.herokuapp.com/docs)
+- [API Docs](https://productsapi-staging.herokuapp.com/api/v1/docs)
+- [Postman Documentation](https://documenter.getpostman.com/view/7505181/SVmwxJSm)
 - [Postman Collections](https://www.getpostman.com/collections/f79fa50ac8890d7da743)
 
 
