@@ -20,4 +20,19 @@ export default class AdminController {
     response.setSuccess(200, 'Users retrieved!', users);
     return response.send(res);
   }
+
+  /**
+   * Retrieve all users
+   * Route: GET: /users/:id
+   * @param {object} req object
+   * @param {object} res object
+   * @returns {array} users
+   * @memberof AdminController
+   */
+  static getAUser(req, res) {
+    const { email } = req.params;
+    const user = User.findOne('email', email);
+    response.setSuccess(200, 'User retrieved!', user);
+    return response.send(res);
+  }
 }

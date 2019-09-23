@@ -14,4 +14,11 @@ admin.get(
   AdminController.getAllUsers
 );
 
+admin.get(
+  '/users/:email',
+  verifyToken,
+  permit('admin'),
+  AdminController.getAUser
+);
+
 export default admin;

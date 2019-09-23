@@ -54,13 +54,18 @@ export default class User {
   }
 
   /**
-   * @param {string} email
+   * @param {string} column
+   * @param {string} value
    * @returns {object} user
    * @memberof User
    */
-  static findOne(email) {
-    return User.table.find((user) => user.email === email);
+  static findOne(column = 'id', value) {
+    const user = User.table.find((record) => record[column] === value);
+    return user;
   }
+  /* static findOne(email) {
+    return User.table.find((user) => user.email === email);
+  } */
 
   /**
    * @description resets user DB

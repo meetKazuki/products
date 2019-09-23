@@ -58,4 +58,22 @@ describe('Admin Routes', () => {
         });
     });
   });
+
+  context('Retrieve a user in the system', () => {
+    adminToken = generateToken(adminLogin);
+    it('should retrieve a user by his email address', (done) => {
+      chai
+        .request(app)
+        .get(`${baseURI}/users/rheaphy9@123-reg.co.uk`)
+        .set('Authorization', adminToken)
+        .end((err, res) => {
+          const { status, message, data } = res.body;
+          expect(res).to.have.status(200);
+          expect(status).to.eql('success');
+          expect(message).to.eql('User retrieved!');
+          expect(data).to.be.an('object');
+          done(err);
+        });
+    });
+  });
 });
