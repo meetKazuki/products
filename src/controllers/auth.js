@@ -45,7 +45,7 @@ export default class AuthController {
    */
   static signin(req, res) {
     const { email, password } = req.body;
-    const user = User.findOne(email);
+    const user = User.findOne('email', email);
     if (!user) {
       response.setError(401, 'Email/password is incorrect');
       return response.send(res);

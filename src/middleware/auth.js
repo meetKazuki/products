@@ -26,7 +26,7 @@ export default {
 
   checkExistingUser: (req, res, next) => {
     const { email } = req.body;
-    const theUser = User.findOne(email);
+    const theUser = User.findOne('email', email);
     if (theUser) {
       response.setError(409, 'User already exist');
       return response.send(res);

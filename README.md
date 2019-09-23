@@ -50,6 +50,8 @@ Ensure that you have the following installed on your local machine:
     - cd products
     - npm install
   ```
+- Create/configure .env environment with your credentials. A sample .env.example file has been provided to get you started.
+  Make a duplicate of .env.example and rename to .env, then configure your credentials.
 - Run `npm run start:dev` to spin up the server and watch for changes.
 
 ### Testing
@@ -102,6 +104,7 @@ Each response will be returned with one of the following HTTP status codes:
 | <code>/api/v1/sales/{saleId}</code>                     | `GET`       | Fetch a single sale record by id          |
 | <code>/api/v1/products/new</code>                       | `POST`      | Create a new product                      |
 | <code>/api/v1/sales/new</code>                          | `POST`      | Create a new sales record                 |
+
 
 ## Inspiration/Resources
 ▶️ [Restful API with NodeJS, Express, PostgreSQL, Sequelize, Travis, Mocha, Coveralls and Code Climate.](https://medium.com/@victorsteven/restful-api-with-nodejs-express-postgresql-sequelize-travis-mocha-coveralls-and-code-climate-f28715f7a014) by [Steven Victor](https://github.com/victorsteven/Book-app-NodeJS-PostgreSQL-Travis-Coveralls-Code-Climate)
